@@ -1,0 +1,13 @@
+ Frontend
+  - [ ] Create a new component for user profile edit
+  - [ ] Create a new component for store profile
+
+
+
+ BackEnd
+  - [ ] Create a new route for user profile edit
+  - [ ] Create a new route for store profile
+
+
+
+  Video time stamp: 3:18:00
