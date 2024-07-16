@@ -1,12 +1,12 @@
-import {Request, Response } from 'express';
+import { Request, Response } from 'express';
 import User from '../models/users';
 
 const createCurrentUser = async (req: Request, res: Response) => {
-  try{
-    const {auth0Id} = req.body;
-    const existingUser = await User.findOne({auth0Id});
+  try {
+    const { auth0Id } = req.body;
+    const existingUser = await User.findOne({ auth0Id });
 
-    if(existingUser){
+    if (existingUser) {
       return res.status(200).send();
     }
 
@@ -14,13 +14,37 @@ const createCurrentUser = async (req: Request, res: Response) => {
     await newUser.save();
 
     res.status(201).json(newUser.toObject());
-  }catch(error){
+  } catch (error) {
     console.error(error);
-    res.status(500).json({message: 'Erro ao criar usuário'})
+    res.status(500).json({ message: 'Erro ao criar usuário' });
   }
+};
 
-}
+const updateCurrentUser = async (req: Request, res: Response) => {
+  try {
+    const { name, addressLine1, addresLine2, city, zipCode } = req.body;
 
-export default{
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+
+    user.name = name;
+    user.addressLine1 = addressLine1;
+    user.city = city;
+    user.zipCode = zipCode;
+    user.addresLine2 = addresLine2;
+
+    await user.save();
+    res.send(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro ao atualizar usuário' });
+  }
+};
+
+export default {
   createCurrentUser,
-}
+  updateCurrentUser,
+};
