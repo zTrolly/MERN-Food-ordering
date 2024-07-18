@@ -1,6 +1,23 @@
 import { Request, Response } from 'express';
 import User from '../models/users';
 
+
+const getCurrentUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({_id: req.userId});
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+
+    res.send(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro ao buscar usuário' });
+  }
+}
+
+
 const createCurrentUser = async (req: Request, res: Response) => {
   try {
     const { auth0Id } = req.body;
@@ -44,7 +61,10 @@ const updateCurrentUser = async (req: Request, res: Response) => {
   }
 };
 
+
+
 export default {
+  getCurrentUser,
   createCurrentUser,
   updateCurrentUser,
 };
