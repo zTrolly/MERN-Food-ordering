@@ -5,6 +5,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input';
 import LoadingButton from '@/components/LoadingButton';
 import { Button } from '@/components/ui/button';
+import { User } from '@/types';
+import { useEffect } from 'react';
 
 const formSchema = z.object({
   email: z.string().optional(),
@@ -20,9 +22,10 @@ type UserFormData = z.infer<typeof formSchema>;
 type Props = {
   onSave: (userProfileData: UserFormData) => void;
   isLoading: boolean;
+  userData: User;
 }
 
-const UserProfileForm = ({onSave, isLoading}: Props) => {
+const UserProfileForm = ({onSave, isLoading, userData}: Props) => {
 
   const cepMask = (value: string) => {
     if (!value) return
@@ -36,7 +39,13 @@ const UserProfileForm = ({onSave, isLoading}: Props) => {
 
   const form = useForm<UserFormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: userData,
   });
+
+  useEffect(() => {
+    form.reset(userData)
+  }, [userData, form])
+
 
 
   return (
