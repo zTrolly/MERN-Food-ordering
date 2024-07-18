@@ -10,7 +10,6 @@ type CreateUserRequest = {
   email: string;
 };
 
-
 export const useGetMyUser = () => {
   const {getAccessTokenSilently} = useAuth0();
 
@@ -48,9 +47,7 @@ export const useGetMyUser = () => {
 
 export const useCreateUser = () => {
 
-
   const {getAccessTokenSilently} = useAuth0();
-
 
   const CreateMyUserRequest = async (user: CreateUserRequest) => {
     const accessToken = await getAccessTokenSilently();
@@ -69,17 +66,15 @@ export const useCreateUser = () => {
     }
   }
 
- 
-
   const {
     mutateAsync: createUser,
     isLoading,
     isError,
-    isSuccess,} = useMutation(CreateMyUserRequest);
+    isSuccess,
+  } = useMutation(CreateMyUserRequest);
 
     return { createUser, isLoading, isError, isSuccess };
 };
-
 
 type UpdateUserRequest = {
   name: string;

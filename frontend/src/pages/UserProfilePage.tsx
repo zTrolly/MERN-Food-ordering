@@ -1,4 +1,5 @@
 import { useGetMyUser, useUpdateMyUser } from "@/api/MyUserApi";
+import { LoadingComponent } from "@/components/LoadingComponent";
 import UserProfileForm from "@/forms/user-profile-form/UserProfileForm";
 
 
@@ -7,7 +8,7 @@ const UserProfilePage = () => {
   const {currentUser, isLoading: isGetMyUserLoading } = useGetMyUser()
 
   if (isGetMyUserLoading) {
-    return <span>Loading...</span>
+    return <LoadingComponent />
   }
 
   if (!currentUser) {
