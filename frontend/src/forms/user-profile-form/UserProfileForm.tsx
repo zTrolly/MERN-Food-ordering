@@ -25,6 +25,7 @@ type Props = {
 const UserProfileForm = ({onSave, isLoading}: Props) => {
 
   const cepMask = (value: string) => {
+    if (!value) return
     return value
       .replace(/\D/g, '')
       .replace(/(\d{5})(\d)/, '$1-$2')
@@ -117,7 +118,7 @@ const UserProfileForm = ({onSave, isLoading}: Props) => {
            
         </div>
 
-      {isLoading ? <LoadingButton /> : <Button type='submit' className='bg-orange-500'>Enviar</Button> }
+      {isLoading ? <LoadingButton /> : <Button  className='bg-orange-500' type='submit'>Salvar</Button>}
       </form>
       
     </Form>

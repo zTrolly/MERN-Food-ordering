@@ -13,7 +13,7 @@ const handleValidationErrors = (req:Request, res:Response, next: NextFunction) =
 export const validateMyUserRequest = [
   body('name').isString().notEmpty().withMessage('Nome é obrigatório'),
   body('addressLine1').isString().notEmpty().withMessage('Endereço é obrigatório'),
-  body('addresLine2').isString().notEmpty().withMessage('Bairro é obrigatório'),
+  body('addressLine2').isString().notEmpty().withMessage('Bairro é obrigatório'),
   body('city').isString().notEmpty().withMessage('Cidade é obrigatória'),
   body('zipCode').isString().notEmpty().withMessage('CEP é obrigatório'),
   handleValidationErrors,

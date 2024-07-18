@@ -9,6 +9,8 @@ type CreateUserRequest = {
 };
 
 
+
+
 export const useCreateUser = () => {
 
 
@@ -32,6 +34,8 @@ export const useCreateUser = () => {
     }
   }
 
+ 
+
   const {
     mutateAsync: createUser,
     isLoading,
@@ -39,5 +43,49 @@ export const useCreateUser = () => {
     isSuccess,} = useMutation(CreateMyUserRequest);
 
     return { createUser, isLoading, isError, isSuccess };
+};
+
+
+type UpdateUserRequest = {
+  name: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  zipCode: string;
+};
+
+export const useUpdateMyUser = () => {
+   const {getAccessTokenSilently} = useAuth0();
+
+  const UpdateMyUserRequest = async (user: UpdateUserRequest) => {
+    const accessToken = await getAccessTokenSilently();
+
+    const response = await fetch(`${API_BASE_URL}/api/my/user`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    if (!response.ok) {
+      console.error(response);
+      throw new Error("Falha ao atualizar usuário");
+    }
+
+    return response.json();
+  
   }
+
+  const {
+    mutateAsync: updateUser,
+    isLoading,
+    isError,
+    isSuccess,
+    reset,
+  } = useMutation(UpdateMyUserRequest);
+
+  return { updateUser, isLoading};
+}
 

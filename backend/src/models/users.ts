@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
   addressLine1: { //rua
     type:String,
   },
-  addresLine2: { //bairro
+  addressLine2: { //bairro
     type:String,
   },
   zipCode: { // cep
